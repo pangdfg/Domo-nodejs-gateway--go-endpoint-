@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  go-app:
+    image: test/go-app
+    restart: always
+    build:
+      context: ./go-app
+      dockerfile: Dockerfile
+    container_name: go-app
+    volumes:
+      - ./go-app:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - test-network
+
+  node-app:
+    image: test/node-app
+    build: 
+      context: ./node-app
+      dockerfile: Dockerfile
+    restart: always
+    container_name: node-app
+    volumes:
+      - ./node-app:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - go-app
+    networks:
+      - test-network
+networks:
+  test-network:
+    driver: bridge
