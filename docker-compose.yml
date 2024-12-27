@@ -28,6 +28,9 @@ services:
       - "4000:4000"
     depends_on:
       - go-app
+    environment:
+      - API=http://go-app:3000/api/users
+      - PORT=4000
     networks:
       - test-network
 networks:

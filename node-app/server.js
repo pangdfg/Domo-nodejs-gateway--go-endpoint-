@@ -4,7 +4,9 @@ const { graphqlHTTP } = require("express-graphql");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const axios = require("axios");
 
-const FIBER_API_URL = "http://go-app:3000/api/users";
+require("dotenv").config();
+
+const FIBER_API_URL = process.env.API || "http://go-app:3000/users";
 
 // GraphQL type definitions
 const typeDefs = `
@@ -97,7 +99,7 @@ app.use(
 );
 
 // Start the server
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`GraphQL server running at http://localhost:${PORT}/graphql`);
 });
